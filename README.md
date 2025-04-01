@@ -1,2 +1,2 @@
 # PlaylistGenerator
-Spotify playlist generator using public API
+Spotify playlist generator made with Python using public API
