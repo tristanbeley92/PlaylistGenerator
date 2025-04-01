@@ -1,0 +1,15 @@
+<!-- templates/create_playlist_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Playlist</title>
+</head>
+<body>
+    <h1>Create a New Spotify Playlist</h1>
+    <form action="/create_playlist" method="post">
+        <input type="text" name="playlist_name" placeholder="Enter playlist name" required>
+        <button type="submit">Create Playlist</button>
+    </form>
+</body>
+</html>

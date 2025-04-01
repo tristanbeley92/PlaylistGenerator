@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommended Tracks</title>
+</head>
+<body>
+    <h2>Recommended Tracks for {{ genre|capitalize }}</h2>
+
+    <form action="/add_tracks" method="post">
+        {% for track in tracks %}
+            <input type="checkbox" name="track_{{ loop.index0 }}" value="{{ track.uri }}">
+            {{ track.name }} by {{ track.artist }}
+            
+            {% if track.image %}
+                <img src="{{ track.image }}" alt="Album Cover" style="width: 80px; height: 80; margin-top: 4px;">
+    
+            {% else %}
+                <em>No Album Cover</em>
+            {% endif %}
+        
+        {% endfor %}
+        <button type="submit">Add Selected Tracks to Playlist</button>
+    </form>
+
+    <br>
+    <form method="get" action="/recommendations">
+        <input type="hidden" name="genre" value="{{ genre }}">
+        <button type="submit">🔄 Refresh Recommendations</button>
+    </form>
+</body>
+</html>
