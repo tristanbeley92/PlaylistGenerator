@@ -2,31 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Recommended Tracks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomended Songs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
-    <h2>Recommended Tracks for {{ genre|capitalize }}</h2>
+    <section id ="Recommendations">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+            </ul>
+        </nav>
+        <h2>Recommended Tracks For {{ genre|capitalize }}</h2>
 
-    <form action="/add_tracks" method="post">
-        {% for track in tracks %}
-            <input type="checkbox" name="track_{{ loop.index0 }}" value="{{ track.uri }}">
-            {{ track.name }} by {{ track.artist }}
-            
-            {% if track.image %}
-                <img src="{{ track.image }}" alt="Album Cover" style="width: 80px; height: 80; margin-top: 4px;">
-    
-            {% else %}
-                <em>No Album Cover</em>
-            {% endif %}
+        <form action="/add_tracks" method="post">
+
+            <input type="hidden" name="genre" value="{{ genre }}">
+
+            {% for track in tracks %}
+                <input type="checkbox" name="track_{{ loop.index0 }}" value="{{ track.uri }}">
+                {{ track.name }} by {{ track.artist }}
+                
+                {% if track.image %}
+                    <img src="{{ track.image }}" alt="Album Cover" style="width: 80px; height: 80px; margin-top: 4px;">
         
-        {% endfor %}
-        <button type="submit">Add Selected Tracks to Playlist</button>
-    </form>
+                {% else %}
+                    <em>No Album Cover</em>
+                {% endif %}
+            
+            {% endfor %}
+            <button type="submit">Add Selected Tracks to Playlist</button>
+        </form>
 
-    <br>
-    <form method="get" action="/recommendations">
-        <input type="hidden" name="genre" value="{{ genre }}">
-        <button type="submit">🔄 Refresh Recommendations</button>
-    </form>
+    
+        <form method="get" action="/recommendations">
+            <input type="hidden" name="genre" value="{{ genre }}">
+            <button type="submit">🔄 Refresh Recommendations</button>
+        </form>
+    </section>
+
+    <section id="footer">
+        <p>© 2025 Spotify Playlist Generator</p>
 </body>
 </html>

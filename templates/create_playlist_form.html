@@ -2,10 +2,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Create a Playlist</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create A New Playlist</title>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
 </head>
 <body>
+
+    <h1>Spotify Playlist Generator</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/recommendations">Recommendations</a></li>
+                <li><a href="/create_playlist_form">New Playlists</a></li>
+            </ul>
+        </nav>
+
     <h1>Create a New Spotify Playlist</h1>
     <form action="/create_playlist" method="post">
         <input type="text" name="playlist_name" placeholder="Enter playlist name" required>
