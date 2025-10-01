@@ -5,54 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{genre|capitalize}} - Recommendation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <style>
-    body{background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;
-         min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0}
-    .card{width:min(520px,92vw);background:#0f0f0f;border-radius:18px;
-          box-shadow:0 10px 30px rgba(0,0,0,.4);padding:24px;text-align:center}
-    .art{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;margin-bottom:16px}
-    h1{font-size:1.2rem;margin:0 0 6px} p{margin:0 0 16px;color:#bbb}
-    .row{display:flex;gap:12px} .row form{flex:1}
-    button{width:100%;padding:14px 16px;border:none;border-radius:999px;font-size:1rem;cursor:pointer}
-    .btn-add{background:#1db954;color:#fff}.btn-next{background:#2a2a2a;color:#fff}
-    .muted{color:#888;font-size:.9rem;margin-top:8px}
-  </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-    <body>
+<body>
 
-        <a class="home-btn" href="{{ url_for('home') }}">Home</a>
+    <a class="home-btn btn-recommend-home" href="{{ url_for('home') }}">Home - Change Genre</a>
 
+      
     <div class="card">
         {% if track %}
-        {% if track.image %}<img class="art" src="{{ track.image }}" alt="Album cover">{% endif %}
-        <h1>{{ track.name }}</h1>
-        <p>by {{ track.artist }}</p>
-        <p class="muted">{{ index+1 }} / {{ total }} — {{ genre|capitalize }}</p>
+            {% if track.image %}
+                <img class="art" src="{{ track.image }}" alt="Album cover">
+            {% endif %}
+            <h1>{{ track.name }}</h1>
+            <p>by {{ track.artist }}</p>
+            <p class="muted">{{ index+1 }} / {{ total }} — {{ genre|capitalize }}</p>
 
-        <div class="row">
-            <form action="{{ url_for('decision') }}" method="post">
-            <input type="hidden" name="action" value="add">
-            <input type="hidden" name="uri" value="{{ track.uri }}">
-            <input type="hidden" name="genre" value="{{ genre }}">
-            <button class="btn-add" type="submit">Add to Playlist</button>
-            </form>
-            <form action="{{ url_for('decision') }}" method="post">
-            <input type="hidden" name="action" value="skip">
-            <input type="hidden" name="uri" value="{{ track.uri }}">
-            <input type="hidden" name="genre" value="{{ genre }}">
-            <button class="btn-next" type="submit">Next</button>
-            </form>
-        </div>
+            <div class="row">
+                <form action="{{ url_for('decision') }}" method="post">
+                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="uri" value="{{ track.uri }}">
+                    <input type="hidden" name="genre" value="{{ genre }}">
+                    <button class="btn-add" type="submit">Add to Playlist</button>
+                </form>
+
+                <form action="{{ url_for('decision') }}" method="post">
+                    <input type="hidden" name="action" value="skip">
+                    <input type="hidden" name="uri" value="{{ track.uri }}">
+                    <input type="hidden" name="genre" value="{{ genre }}">
+                    <button class="btn-next" type="submit">Next</button>
+                </form>
+            </div>
         {% else %}
-        <h1>That’s all for now 👋</h1>
-        <p class="muted">Pick a new genre on Home, or refresh this one.</p>
-        <form action="{{ url_for('start') }}" method="post" style="margin-top:12px">
-            <input type="hidden" name="genre" value="{{ genre }}">
-            <button class="btn-next" type="submit">Refresh {{ genre|capitalize }}</button>
-        </form>
-        {% if gpt_summary %}<p class="muted" style="margin-top:12px">{{ gpt_summary }}</p>{% endif %}
+            <h1>That’s all for now</h1>
+            <p class="muted">Pick a new genre on Home, or refresh this one.</p>
+            
+            <form action="{{ url_for('start') }}" method="post" style="margin-top:12px">
+                <input type="hidden" name="genre" value="{{ genre }}">
+                <button class="btn-next" type="submit">Refresh {{ genre|capitalize }}</button>
+            </form>
         {% endif %}
     </div>
-    </body>
+
+</body>
 </html>

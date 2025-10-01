@@ -6,32 +6,29 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+    <a class="home-btn btn-recommend-home" href="{{ url_for('welcome') }}">Home - Change Function</a>
+
     <h1>Spotify Playlist Generator</h1>
 
     <div class="home-container">
-    
         <!-- Create Playlist form -->
         {% if not session.playlist_id %}
-        <form action="/create_playlist" method="post">
-            <input type="text" name="playlist_name" placeholder="Enter playlist name..." required
-                style="padding:10px; border-radius:20px; border:none; margin-bottom:16px; width:250px; text-align:center;">
-            <br>
-            <button type="submit">Create Playlist</button>
-        </form>
+            <form action="/create_playlist" method="post">
+                <input type="text" class="genre-input" name="playlist_name" placeholder="Enter playlist name..." required>
+                <br>
+                <button type="submit" class="home-btn btn-add">Create Playlist</button>
+            </form>
         {% else %}
-        <p>
-            <a class="button" href="{{ session.playlist_url }}" target="_blank">Open in Spotify</a>
-        </p>
-        {% endif %}
+            <a class="home-btn btn-next" href="{{ session.playlist_url }}" target="_blank">Open in Spotify</a>
 
-        <!-- Start Playlist form -->
-        <form action="/start" method="post">
-            <input type="text" name="genre" placeholder="Enter a genre for recommendations..." required
-                    style="padding:10px; border-radius:20px; border:none; margin-bottom:16px; width:250px; text-align:center;">
-            <br>
-            <button type="submit">Begin</button>
-        </form>
+            <!-- Start Playlist form -->
+            <form action="/start" method="post">
+                <input type="text" class="genre-input" name="genre" placeholder="Enter a genre for recommendations..." required>
+                <br>
+                <button type="submit" class="home-btn btn-add">Begin</button>
+            </form>
+        {% endif %}
     </div>
-  
 </body>
 </html>

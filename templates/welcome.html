@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>Welcome to TuneBuilder</h1>
+    <br>
+    <h1>The Spotify REST API Function Explorer</h1>
+    <h2 class="welcome-text"></h2>Explore different functionalities of the Spotify API to create and customize your playlists.
+    <a class="home-btn btn-add welcome-btn" href="{{ url_for('home') }}">Create a personalized playlist.</a>
+</body>
+</html>
