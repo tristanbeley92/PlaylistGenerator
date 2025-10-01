@@ -1,1 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+
+# Virtual environment
 .env
+venv/
+ENV/
+*.egg-info/
+
+# IDE settings
+.idea/
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Flask/Static cache
+instance/
+*.pid
+
+# Local secrets
+*.env
