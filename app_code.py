@@ -129,71 +129,6 @@ def callback():
 
     return redirect(url_for('home')) # Redirect to recommendations page after login
 
-# @app.route('/recommendations', methods=['GET'])
-# def get_recommendations():
-#     # This is where you would use the access token to get recommendations
-#     # You can use the access token to make requests to Spotify's API
-
-#     genre = request.args.get("genre")
-
-#     if genre:
-#         session['genre'] = genre  # Store the selected genre in the session
-#     else:
-#         genre = session.get('genre', 'house')  # Default to 'house' if no genre is found
-
-#     access_token = session.get('access_token')
-
-#     if not access_token:
-#         return redirect('/login') # If no access token, redirect to login
-
-#     #If we already have a queue and were not at the end, show current card 
-#     q = session.get('track_queue') or []
-#     idx = session.get('current_track_index', 0)
-#     print(f"[STATE] queue len={len(q)} idx={idx} genre={genre}")
-#     if q and idx < len(q):
-#         track, i, total = _current_track()
-#         print(f"[RENDER] existing track i={i}/{total}")
-#         # Safety: if somehow track is None, force a refetch
-#         if not track:
-#             _clear_queue()
-#             return redirect(url_for('get_recommendations', genre=genre))
-#         return render_template('recommend-card.html',
-#                                track=track, index=i, total=total, genre=genre)
-
-
-#     #Fetch a fresh batch of recommendations
-#     url = "https://api.spotify.com/v1/search"  # Spotify's search endpoint for recommendations
-#     headers = {
-#         "Authorization": f"Bearer {access_token}"
-#     }
-#     params = {
-#         "q": f"genre:{genre}",  # Search query (genre)
-#         "type": "track",  # Type of item to search for
-#         "limit": 20,  # Limit the number of results
-#         "offset": random.randint(0,400),  # Random offset for pagination
-#         "market": "CA"  # Market to search in (Canada in this case)
-#     }
-
-#     r = requests.get(url, headers=headers, params=params)
-#     if not r.ok:
-#         return f"Error fetching recommendations, status code: {r.status_code}"
-
-#     items = r.json().get("tracks", {}).get("items", [])
-#     if not items: return "No tracks found for this genre"
-
-#     tracks = [{
-#         "name": t["name"],
-#         "artist": t["artists"][0]["name"],
-#         "uri": t["uri"],
-#         "image": t["album"]["images"][0]["url"] if t["album"]["images"] else None
-#     } for t in items]
-
-#     _init_queue(tracks)
-#     track, i, total = _current_track()
-#     print(f"[RENDER] new track i={i}/{total}")
-#     return render_template('recommend-card.html',
-#                            track=track, index=i, total=total, genre=genre)
-
 @app.route('/create_playlist', methods=['POST']) #Create a playlist code and logic
 def create_playlist():
     access_token = session.get('access_token')
@@ -269,43 +204,6 @@ def decision():
                                genre=genre, gpt_summary=session.get('gpt_summary'))
 
     return redirect(url_for('start', genre=genre))
-
-# @app.route('/add_tracks', methods=['POST']) #Add tracks to the playlist
-# def add_tracks():
-#     access_token = session.get('access_token')
-#     playlist_id = session.get('playlist_id')
-
-#     if not access_token:
-#         return redirect('/login')
-#     if not playlist_id:
-#         return redirect(url_for('home'))
-    
-#     selected_tracks = [v for k, v in request.form.items() if k.startswith('track_')]  # Get selected track URIs from the form
-
-#     if not selected_tracks:
-#         return "No tracks selected to add to the playlist"
-    
-#     url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
-#     headers = {
-#         "Authorization": f"Bearer {access_token}",
-#         "Content-Type": "application/json"
-#     }
-
-#     response = requests.post(
-#         url,
-#         headers=headers,
-#         json={
-#             "uris": selected_tracks  # List of track URIs to add to the playlist
-#         }
-#     )
-
-#     if response.status_code == 201 or response.status_code == 200:
-#         genre = request.form.get("genre")
-#         print("Tracks added successfully")
-#         return redirect(url_for('get_recommendations', genre=genre))
-#     else:
-#         return f"Failed to add tracks: {response.status_code} - {response.text}"
-
 
 # --- helpers ----
 def _init_queue(tracks):
